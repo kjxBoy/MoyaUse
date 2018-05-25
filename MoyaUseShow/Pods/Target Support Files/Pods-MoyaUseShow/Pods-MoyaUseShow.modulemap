@@ -1,0 +1,6 @@
+framework module Pods_MoyaUseShow {
+  umbrella header "Pods-MoyaUseShow-umbrella.h"
+
+  export *
+  module * { export * }
+}
