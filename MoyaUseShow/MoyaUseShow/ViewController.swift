@@ -11,26 +11,28 @@ import Moya
 import Result
 
 class ViewController: UIViewController {
+    
+   
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        let provider = MoyaProvider<MyService>( plugins: [RequestAlertPlugin(viewController: self)])
-        
-        provider.request(.carInfo(carId: 1, cityId: 1)) { (result) in
-            switch result {
-            case let .success(response):
-                do {
-                    let showJson = try response.mapJSON()
-                    print(showJson, "7777")
-                } catch {
-                    print(error)
-                }
-            case let .failure(error):
-                print(error,"8888888")
-            }
-        }
+//        let provider = MoyaProvider<MyService>( plugins: [RequestAlertPlugin(viewController: self)])
+//
+//        provider.request(.carInfo(carId: 1, cityId: 1)) { (result) in
+//            switch result {
+//            case let .success(response):
+//                do {
+//                    let showJson = try response.mapJSON()
+//                    print(showJson, "7777")
+//                } catch {
+//                    print(error)
+//                }
+//            case let .failure(error):
+//                print(error,"8888888")
+//            }
+//        }
         
 
-        /*
+        
         let provider = MultiMoyaProvider()
         provider.requestDecoded(UserApi<Dog>.carInfo(carId: 1, cityId: 1)) { result in
             switch result {
@@ -42,7 +44,6 @@ class ViewController: UIViewController {
                 print(error)
             }
         }
-        */
     }
 }
 

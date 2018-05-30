@@ -51,6 +51,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 // 解析过程(可以根据解析的需求自己扩展解析)
 protocol TestResultType {
     static func parse(_ object: Any) -> Self?
+    static func parses(_ object: Any) -> [Self]?
 }
 
 // 默认解析的模型类型
@@ -71,31 +72,6 @@ extension DecodableTargetType {
     }
 }
 
-struct SessionApi: DecodableTargetType {
-    
-    var carId: Int = 0
-    var cityId: Int = 0
-   
-    var path: String {
-        return "/newcar/Car/carinfo"
-    }
-    
-    var method: Moya.Method {
-        return .get
-    }
-    
-    var task: Task {
-         return .requestParameters(parameters: ["carId": carId, "cityId": cityId], encoding: URLEncoding.queryString)
-    }
-    
-    var headers: [String : String]? {
-        let _parameters = ["carId": carId, "cityId": cityId]
-        let token = Token(signKey: "x*&c%a&r^*2$0*1&^6*&k$e*%y*", parameter: _parameters).tokenString
-        return ["token": token]
-    }
-    
-    typealias ResultType = Dog
-}
 
 enum UserApi<ResultType: TestResultType>: DecodableTargetType {
     
@@ -153,11 +129,12 @@ final class MultiMoyaProvider: MoyaProvider<MultiTarget> {
     */
     
     @discardableResult
-    func requestDecoded<T: DecodableTargetType>(_ target: T, completion: @escaping (_ result: Result<T.ResultType, MoyaError>) -> ()) -> Cancellable {
+    func requestDecoded<T: DecodableTargetType>(_ target: T, completion: @escaping (_ result: Result<[T.ResultType], MoyaError>) -> ()) -> Cancellable {
         return request(MultiTarget(target)) { result in
             switch result {
             case .success(let response):
-                if let parsed = T.ResultType.parse(try! response.mapJSON()) {
+                
+                if let parsed = T.ResultType.parses(try! response.mapJSON()) {
                     // Result.success(parsed)
                     completion(.success(parsed))
                 } else {
@@ -173,6 +150,15 @@ final class MultiMoyaProvider: MoyaProvider<MultiTarget> {
 
 struct Student: TestResultType {
     typealias T = Student
+    
+    static func parses(_ object: Any) -> [T]? {
+        var stu = T()
+        stu.name = "kang.jiaxing"
+        stu.age = "may be 18 years old"
+        stu.Features = " handsome "
+        return [stu]
+    }
+    
     
     ///  模型自己讲从Any -> 实例的方式告诉出去
     static func parse(_ object: Any) -> T? {
@@ -191,6 +177,13 @@ struct Student: TestResultType {
 }
 
 struct Dog: TestResultType {
+    static func parses(_ object: Any) -> [Dog]? {
+        var dog = Dog()
+        dog.name = "xiao hei"
+        dog.age = "10"
+        return [dog]
+    }
+    
     static func parse(_ object: Any) -> Dog? {
         var dog = Dog()
         dog.name = "xiao hei"
