@@ -31,7 +31,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 }
 */
 
-private enum MyService {
+enum MyService {
     case carInfo(carId:Int, cityId:Int)
 }
 
@@ -63,10 +63,11 @@ extension MyService: TargetType {
         }
     }
     var headers: [String: String]? {
+        return nil // 在使用插件的情况下，可以直接传回nil类型 
         switch self {
         case let .carInfo(carId, cityId):
             let _parameters = ["carId": carId, "cityId": cityId]
-            let token = Token(signKey: "x*&c%a&r^*2$0*1&^6*&k$e*%y*", parameter: _parameters).token
+            let token = Token(signKey: "x*&c%a&r^*2$0*1&^6*&k$e*%y*", parameter: _parameters).tokenString
             return ["token": token]
         }
     }

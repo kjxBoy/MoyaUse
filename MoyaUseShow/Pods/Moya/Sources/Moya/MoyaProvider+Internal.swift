@@ -30,8 +30,9 @@ public extension MoyaProvider {
             let processedResult = self.plugins.reduce(result) { $1.process($0, target: target) }
             completion(processedResult)
         }
-
+        // 默认是false
         if trackInflights {
+            // 原子属性
             objc_sync_enter(self)
             var inflightCompletionBlocks = self.inflightRequests[endpoint]
             inflightCompletionBlocks?.append(pluginsWithCompletion)
@@ -62,8 +63,8 @@ public extension MoyaProvider {
                 pluginsWithCompletion(.failure(error))
                 return
             }
-
-            // Allow plugins to modify request
+            // self.plugins.reduce(request) { (result, pluginType) -> Result in }
+            // Allow plugins to modify request(使用reduce，使得URLRequest 遵守所有的插件要求)
             let preparedRequest = self.plugins.reduce(request) { $1.prepare($0, target: target) }
 
             let networkCompletion: Moya.Completion = { result in

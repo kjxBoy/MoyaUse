@@ -19,7 +19,7 @@ class Token {
     }
     
     ///转化为根据key值排序由value生成的字符串
-    var token: String {
+    var tokenString: String {
         parameter["signedKey"] = signKey
         parameter["token"] = nil
         return parameter.toKeyOrderedValueString().md5

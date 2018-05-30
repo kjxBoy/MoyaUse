@@ -15,6 +15,8 @@
 		B43D0C3520B80CC400AE3CD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B43D0C3320B80CC400AE3CD4 /* LaunchScreen.storyboard */; };
 		B43D0C3F20B80FAD00AE3CD4 /* 基本用法.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43D0C3E20B80FAD00AE3CD4 /* 基本用法.swift */; };
 		B43D0C4120B8137700AE3CD4 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43D0C4020B8137700AE3CD4 /* Token.swift */; };
+		B498336120BBDC0600A420E1 /* MultiMoyaProvider解析.swift in Sources */ = {isa = PBXBuildFile; fileRef = B498336020BBDC0600A420E1 /* MultiMoyaProvider解析.swift */; };
+		B498336320BC00A900A420E1 /* 最基本插件类型.swift in Sources */ = {isa = PBXBuildFile; fileRef = B498336220BC00A900A420E1 /* 最基本插件类型.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		B43D0C3E20B80FAD00AE3CD4 /* 基本用法.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "基本用法.swift"; sourceTree = "<group>"; };
 		B43D0C4020B8137700AE3CD4 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		B43D0C4220B813B200AE3CD4 /* MoyaUseShow-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoyaUseShow-Bridging-Header.h"; sourceTree = "<group>"; };
+		B498336020BBDC0600A420E1 /* MultiMoyaProvider解析.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MultiMoyaProvider解析.swift"; sourceTree = "<group>"; };
+		B498336220BC00A900A420E1 /* 最基本插件类型.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "最基本插件类型.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 				B43D0C2A20B80CC200AE3CD4 /* AppDelegate.swift */,
 				B43D0C2C20B80CC200AE3CD4 /* ViewController.swift */,
 				B43D0C3E20B80FAD00AE3CD4 /* 基本用法.swift */,
+				B498336020BBDC0600A420E1 /* MultiMoyaProvider解析.swift */,
+				B498336220BC00A900A420E1 /* 最基本插件类型.swift */,
 				B43D0C4020B8137700AE3CD4 /* Token.swift */,
 				B43D0C2E20B80CC200AE3CD4 /* Main.storyboard */,
 				B43D0C3120B80CC400AE3CD4 /* Assets.xcassets */,
@@ -215,6 +221,8 @@
 			files = (
 				B43D0C2D20B80CC200AE3CD4 /* ViewController.swift in Sources */,
 				B43D0C2B20B80CC200AE3CD4 /* AppDelegate.swift in Sources */,
+				B498336320BC00A900A420E1 /* 最基本插件类型.swift in Sources */,
+				B498336120BBDC0600A420E1 /* MultiMoyaProvider解析.swift in Sources */,
 				B43D0C3F20B80FAD00AE3CD4 /* 基本用法.swift in Sources */,
 				B43D0C4120B8137700AE3CD4 /* Token.swift in Sources */,
 			);
