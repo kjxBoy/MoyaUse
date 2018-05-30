@@ -30,6 +30,7 @@ override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 }
 */
 
+// 插件是有问题的，不能同时出现两个UIAlertController
 final class RequestAlertPlugin: PluginType {
     
     private let viewController: UIViewController

@@ -213,6 +213,7 @@ private extension MoyaProvider {
     func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, callbackQueue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
+        // 将要发送请求(--forEach--)
         plugins.forEach { $0.willSend(alamoRequest, target: target) }
 
         var progressAlamoRequest = alamoRequest
