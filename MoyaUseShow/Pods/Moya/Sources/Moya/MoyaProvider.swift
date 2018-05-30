@@ -111,7 +111,13 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
                       callbackQueue: DispatchQueue? = .none,
                       progress: ProgressBlock? = .none,
                       completion: @escaping Completion) -> Cancellable {
-
+        /**
+        enum Optional<Wrapped> {
+            case none
+            case some(Wrapped)
+        }
+         .none 相当于nil
+        */
         let callbackQueue = callbackQueue ?? self.callbackQueue
         return requestNormal(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
