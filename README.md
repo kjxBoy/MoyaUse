@@ -78,4 +78,99 @@ func loadResource<A>(at path: String, parse: (Any) -> A?, callback: (A?) -> ())
 ### 利用moya达到
 
 
+### 用moya做网络封装(将token的设置放到插件中，可以在插件里面设置token、返回的类型、缓存等)
+
+```
+import Foundation
+import Moya
+import Result
+
+struct RequestPlugin: PluginType {
+    private var urlPath: String
+    private var saveCache: Bool
+    init(urlPath: String = "", saveCache: Bool = true) {
+        self.urlPath = urlPath
+        self.saveCache = saveCache
+    }
+    
+    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
+        if case let .requestParameters(parameters, _) = target.task {
+            ///增加_t参数
+            var _parameters = parameters
+            _parameters["_t"] = Int(Date().timeIntervalSince1970)
+            let token = Token(parameter: _parameters).token
+            ///增加token
+            var showRequest = request
+            var siginedheaders: [String: String] = XCRDevice.sharedManager.deviceHeaders
+            if let headers = showRequest.allHTTPHeaderFields {
+                for (key, value) in headers {
+                    siginedheaders[key] = value
+                }
+            }
+            siginedheaders["token"] = token
+            showRequest.allHTTPHeaderFields = siginedheaders
+            return showRequest
+        }
+        return request
+    }
+   
+    
+    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
+        if saveCache {
+            if case let .requestParameters(parameters, _) = target.task {
+                let cacheKey = XCRCache.cacheKey(path: urlPath, parameters: parameters)
+                switch result {
+                case let .success(response):
+                    do {
+                        let showJson = try response.mapJSON()
+                        guard let data = showJson as? [String: Any] else { return }
+                        XCRCache.set(json: data, key: cacheKey)
+                    } catch {
+                        print(error)
+                    }
+                case .failure(_): break
+                }
+            }
+        }
+    }
+    
+    func process(_ result: Result<Response, MoyaError>, target: TargetType) -> Result<Response, MoyaError> {
+        return result
+    }
+}
+
+enum XCRCarSeriesSubModule {
+    case information(seriesId: Int, type: CarSeriesNewsType, offset: Int, limit: Int)
+}
+
+extension XCRCarSeriesSubModule: TargetType {
+    var path: String {
+        switch self {
+        case .information:
+            return kURLSeriesNews
+        }
+    }
+    
+    var method: Moya.Method {
+        switch self {
+        case .information:
+            return .get
+        }
+    }
+    
+    var task: Task {
+        switch self {
+        case let .information(seriesId, type, offset, limit):
+            return .requestParameters(parameters: ["seriesId": seriesId, "type": type, "offset": offset, "limit": limit], encoding: URLEncoding.default)
+        }
+    }
+    
+    var headers: [String : String]? {
+        return nil
+    }
+}
+
+```
+
+
 
